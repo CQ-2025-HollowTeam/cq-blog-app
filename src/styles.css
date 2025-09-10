@@ -1,1 +1,43 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default;
+    exclude: rootcolor;
+}
+
+@plugin "daisyui/theme" {
+    name: "DevTalles";
+    default: true;
+    color-scheme: "light";
+    --color-base-100: oklch(36.94% 0.125 299.24);
+    --color-base-200: oklch(21.47% 0.069 289.05);
+    --color-base-300: oklch(0% 0 0);
+    --color-base-content: oklch(100% 0 0);
+    --color-primary: oklch(89.83% 0.063 308.18);
+    --color-primary-content: oklch(17.96% 0.05 293.68);
+    --color-secondary: oklch(55.3% 0.289 299.83);
+    --color-secondary-content: oklch(89.196% 0.049 305.03);
+    --color-accent: oklch(42.12% 0.212 280.61);
+    --color-accent-content: oklch(100% 0 0);
+    --color-neutral: oklch(43% 0.232 292.759);
+    --color-neutral-content: oklch(96% 0.016 293.756);
+    --color-info: oklch(54.615% 0.215 262.88);
+    --color-info-content: oklch(90.923% 0.043 262.88);
+    --color-success: oklch(76% 0.177 163.223);
+    --color-success-content: oklch(37% 0.077 168.94);
+    --color-warning: oklch(82% 0.189 84.429);
+    --color-warning-content: oklch(41% 0.112 45.904);
+    --color-error: oklch(71% 0.194 13.428);
+    --color-error-content: oklch(27% 0.105 12.094);
+    --radius-selector: 1rem;
+    --radius-field: 0.5rem;
+    --radius-box: 1rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
+}
+
+:root {
+    background-color: var(--color-base-200);
+}
