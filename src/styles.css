@@ -7,7 +7,7 @@
 @plugin "daisyui/theme" {
     name: "DevTalles";
     default: true;
-    color-scheme: "light";
+    color-scheme: "dark";
     --color-base-100: oklch(36.94% 0.125 299.24);
     --color-base-200: oklch(21.47% 0.069 289.05);
     --color-base-300: oklch(0% 0 0);
