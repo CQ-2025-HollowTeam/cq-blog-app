@@ -1,0 +1,12 @@
+/* Form Styles */
+
+/* Color of input when its valid */
+form label.input:has(input.ng-valid) {
+    --input-color: var(--color-success);
+}
+
+/* Color of input when its invalid */
+form.ng-touched.ng-submitted label.input:has(input.ng-invalid),
+form label.input:has(input.ng-invalid.ng-touched) {
+    --input-color: var(--color-error);
+}

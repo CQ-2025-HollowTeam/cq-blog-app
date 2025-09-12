@@ -1,0 +1,87 @@
+<form
+    [formGroup]="form"
+    (ngSubmit)="register()"
+    class="flex flex-col items-center gap-2"
+>
+    <div class="w-full">
+        <legend class="fieldset-legend">Nombre completo</legend>
+        <label class="input w-full">
+            <input
+                type="text"
+                autocomplete="name"
+                placeholder="Introduce tu nombre completo"
+                formControlName="name"
+            />
+        </label>
+        <ng-container
+            *ngTemplateOutlet="formError; context: { field: 'name' }"
+        />
+    </div>
+
+    <div class="w-full">
+        <legend class="fieldset-legend">Nombre de usuario</legend>
+        <label class="input w-full">
+            <input
+                type="text"
+                autocomplete="username"
+                placeholder="Elige un nombre de usuario"
+                formControlName="username"
+            />
+        </label>
+        <ng-container
+            *ngTemplateOutlet="formError; context: { field: 'username' }"
+        />
+    </div>
+
+    <div class="w-full">
+        <legend class="fieldset-legend">Correo electrónico</legend>
+        <label class="input w-full">
+            <input
+                type="email"
+                autocomplete="email"
+                placeholder="tu@email.com"
+                formControlName="email"
+            />
+        </label>
+        <ng-container
+            *ngTemplateOutlet="formError; context: { field: 'email' }"
+        />
+    </div>
+
+    <div class="w-full">
+        <legend class="fieldset-legend">Contraseña</legend>
+        <label class="input w-full">
+            <input
+                type="password"
+                autocomplete="new-password"
+                formControlName="password"
+            />
+        </label>
+        <ng-container
+            *ngTemplateOutlet="formError; context: { field: 'password' }"
+        />
+    </div>
+
+    <div class="w-full">
+        <legend class="fieldset-legend">Confirmar contraseña</legend>
+        <label class="input w-full">
+            <input
+                type="password"
+                autocomplete="new-password"
+                formControlName="confirmPassword"
+            />
+        </label>
+        <ng-container
+            *ngTemplateOutlet="formError; context: { field: 'confirmPassword' }"
+        />
+    </div>
+    <button class="btn w-full mt-4">Crear cuenta</button>
+</form>
+
+<ng-template #formError let-field="field">
+    @if (formUtils.isValidField(form, field)){
+    <small class="form-text text-error">
+        {{ formUtils.getFieldError(form, field) }}
+    </small>
+    }
+</ng-template>

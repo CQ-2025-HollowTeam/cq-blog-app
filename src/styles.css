@@ -1,9 +1,12 @@
 @import "tailwindcss";
+
+/* Estilos de los formularios */
+@import "./app/shared/styles/form.css";
+
 @plugin "daisyui" {
     themes: light --default;
     exclude: rootcolor;
 }
-
 @plugin "daisyui/theme" {
     name: "DevTalles";
     default: true;
