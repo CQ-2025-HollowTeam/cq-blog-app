@@ -1,1 +1,55 @@
-<p>post-page works!</p>,
+<article class="flex flex-col gap-8 pb-8"> 
+    <!--Header-->
+    <section class="relative">
+        <img class="w-full h-80 object-cover opacity-60" [src]="post().image" [alt]="post().title">
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-base-200 to-transparent"></div>
+        <div class="absolute bottom-0 flex flex-col gap-2 p-4 w-full">
+            <h1 class="text-4xl">{{ post().title }}</h1>
+            <div class="flex items-center justify-between">
+                <p class="text-gray-400">{{ post().createdAt | date | uppercase }}</p>
+                <!--TAGS-->
+                <div class="flex gap-2">
+                    @for (category of post().categories; track $index) {
+                        <post-category [category]="category"></post-category>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--CONTENT-->
+    <section class="flex flex-col sm:flex-row flex-wrap gap-8 px-4">
+
+        <div class="sm:w-[calc(70%-16px)] flex flex-col gap-8">
+            <div [innerHTML]="post().content"></div>
+            <post-comments [comments]="post().comments!"></post-comments>
+        </div>
+
+        <aside class="w-full sm:flex flex-col sm:w-[calc(30%-16px)] grid grid-cols-1 gap-5">
+            <!--Autor-->
+            <div class="flex flex-col gap-2">
+                <p class="text-gray-400">Author</p>
+                <div class="p-4 card-border rounded-2xl flex gap-2 items-center hover:cursor-pointer hover:bg-base-100">
+                    <div class="avatar">
+                        <div class="w-12 h-12 rounded-full">
+                            <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
+                        </div>
+                    </div>
+                    <p>Raúl García</p>
+                </div>
+            </div>
+
+            <!--RELATED-->
+            <div class="flex flex-col gap-2">
+                <p class="text-gray-400">Related posts</p>
+                <posts-carousel 
+                    [posts]="highlightedPosts()" 
+                    [layoutType]="cardLayout.SMALL"
+                    [spaceBetween]="10"
+                ></posts-carousel>
+            </div>
+        </aside>
+
+    </section>
+
+</article>
+

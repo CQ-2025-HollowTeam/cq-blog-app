@@ -1,0 +1,26 @@
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Post } from '../../interfaces/post.interface';
+import { RouterLink } from '@angular/router';
+import { PostCategoryComponent } from '../post-category/post-category.component';
+import { DatePipe, UpperCasePipe } from '@angular/common';
+
+export enum CardLayout {
+  BIG,
+  SMALL,
+}
+
+@Component({
+  selector: 'post-card',
+  imports: [RouterLink, PostCategoryComponent, DatePipe, UpperCasePipe],
+  templateUrl: './post-card.component.html',
+  styleUrl: './post-card.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class PostCardComponent {
+
+  post = input.required<Post>();
+  layoutType = input.required<CardLayout>();
+
+  cardLayout = CardLayout;
+  
+}

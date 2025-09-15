@@ -1,1 +1,24 @@
-<p>landing-page works!</p>,
+<main class="h-full flex flex-col gap-8 py-8 px-4">
+    
+    <!--TRENDING POSTS-->
+    <div class="grid grid-cols-1">
+        <div class="flex flex-col gap-8">   
+            <h2 class="text-2xl">Trending posts</h2>
+            <posts-carousel
+                [posts]="highlightedPosts()" 
+                [layoutType]="cardLayout.BIG"
+                [spaceBetween]="0"
+            ></posts-carousel>
+        </div>
+    </div>
+
+    <!--FILTERS-->
+    <post-search-form></post-search-form>
+
+    <!--POSTS LIST-->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (post of posts(); track post.id) {
+            <post-card [post]="post"  [layoutType]="cardLayout.SMALL"></post-card>
+        }
+    </div>
+</main>
