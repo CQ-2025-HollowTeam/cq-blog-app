@@ -1,0 +1,14 @@
+<div class="flex flex-col items-center">
+    @if (userResource.isLoading()) {
+    <!-- TODO: IMPLEMENTAR SKELETON PARA LA CARGA DEL USER -->
+    } @else if(userResource.hasValue()){ @let user = userResource.value();
+    <img
+        [src]="user.img"
+        alt="User Avatar"
+        class="w-32 h-32 rounded-full mb-4"
+    />
+    <h2 class="text-2xl font-bold mb-2">{{ user.name }}</h2>
+    <p class="text-gray-600 mb-1">Email: {{ user.email }}</p>
+    <p class="text-gray-600">Role: {{ user.role === 0 ? "User" : "Admin" }}</p>
+    }
+</div>
