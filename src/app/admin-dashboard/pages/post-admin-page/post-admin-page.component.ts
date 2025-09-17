@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   selector: 'app-post-admin-page',
   imports: [],
   templateUrl: './post-admin-page.component.html',
+  styleUrl: './post-admin-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostAdminPageComponent { }

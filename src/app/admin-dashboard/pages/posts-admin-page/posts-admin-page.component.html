@@ -1,1 +1,13 @@
-<p>posts-admin-page works!</p>,
+<main class="h-full flex flex-col gap-8 py-8 px-4">
+    <h1 class="text-2xl">Posts</h1>
+
+    <section class="flex flex-col gap-4">
+        <div class="flex justify-between">
+            <post-search-form></post-search-form>
+            <button routerLink="/admin/post/new" class="btn btn-neutral">Nuevo Post</button>
+        </div>
+
+        <posts-table [posts]="posts()"></posts-table>
+    </section>
+</main> 
+
