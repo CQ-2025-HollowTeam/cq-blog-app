@@ -9,10 +9,13 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
     private http = inject(HttpClient);
-    private baseUrl: string = environment.apiUrl;
+    private baseUrl: string = `${environment.apiUrl}/auth`;
 
     login(credentials: { username: string; password: string }) {
-        console.log('Logging in with credentials:', credentials);
+        return this.http.post<{ token: string }>(
+            `${this.baseUrl}/login`,
+            credentials
+        );
     }
 
     register(credentials: {

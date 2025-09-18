@@ -22,7 +22,10 @@
 >
     <div ngProjectAs="modal-header">Iniciar sesión</div>
     <div class="flex flex-col gap-4">
-        <login-form #loginForm />
+        <login-form
+            #loginForm
+            (onLogin)="loginForm.resetForm(); loginDialog.set(false)"
+        />
         <p class="text-center">
             ¿No tienes cuenta?
             <a
