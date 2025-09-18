@@ -20,7 +20,9 @@ export class UserService {
             name: 'Lucas Watsica',
             email: 'wellington63@yahoo.com',
             role: 0,
-            img: 'https://files.cdn.thinkific.com/file_uploads/643563/images/b49/982/89c/FERNANDO.png',
+            img: 'https://media.istockphoto.com/id/1682296067/es/foto/feliz-retrato-de-estudio-o-hombre-profesional-agente-de-bienes-raíces-o-hombre-de-negocios.jpg?s=612x612&w=0&k=20&c=1c4QU0U5FDIpTh08fzH1xo-P8HnXFAHSz09biId8p84=',
+            createdAt: new Date('2023-01-15T10:00:00Z'),
+            updatedAt: new Date('2023-10-20T15:30:00Z'),
         });
     }
 }

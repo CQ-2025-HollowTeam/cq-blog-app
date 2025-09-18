@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { User } from '@shared/interfaces/user.interface';
+import { ProfileImageComponent } from '../profile-image/profile-image.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-profile-header',
-  imports: [],
-  templateUrl: './profile-header.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'profile-header',
+    imports: [ProfileImageComponent, DatePipe],
+    templateUrl: './profile-header.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileHeaderComponent { }
+export class ProfileHeaderComponent {
+    user = input.required<User>();
+    readonly = input<boolean>(false);
+}
