@@ -1,0 +1,10 @@
+export interface User {
+    id: string;
+    username: string;
+    name: string;
+    email: string;
+    role: number;
+    img: string;
+    createdAt: Date;
+    updatedAt: Date;
+}

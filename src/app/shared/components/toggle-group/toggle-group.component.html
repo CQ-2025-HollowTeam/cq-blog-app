@@ -1,0 +1,13 @@
+<div class="join p-2 rounded-4xl bg-primary w-full">
+    @for (option of options(); track option.value) {
+    <input
+        class="btn btn-ghost text-primary-content rounded-4xl flex-1 checked:bg-base-200 checked:text-base-content hover:bg-base-200 hover:text-base-content"
+        type="radio"
+        name="options"
+        [checked]="option.value === value()"
+        [value]="option.value"
+        [ariaLabel]="option.label"
+        (change)="value.set(option.value); onChange.emit(option.value)"
+    />
+    }
+</div>
