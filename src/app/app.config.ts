@@ -11,7 +11,12 @@ import {
     provideClientHydration,
     withEventReplay,
 } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import {
+    provideHttpClient,
+    withFetch,
+    withInterceptors,
+} from '@angular/common/http';
+import { authInterceptor } from '@auth/interceptors/auth.interceptor';
 
 import localeES from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
@@ -24,6 +29,6 @@ export const appConfig: ApplicationConfig = {
         provideZonelessChangeDetection(),
         provideRouter(routes, withViewTransitions()),
         provideClientHydration(withEventReplay()),
-        provideHttpClient(withFetch()),
+        provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     ],
 };
