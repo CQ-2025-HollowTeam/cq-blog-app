@@ -1,24 +1,31 @@
-<main class="h-full flex flex-col gap-8 py-8 px-4">
+<main #postsGroup class="h-full overflow-auto flex flex-col gap-8 py-8 px-4">
     
     <!--TRENDING POSTS-->
     <div class="grid grid-cols-1">
         <div class="flex flex-col gap-8">   
             <h2 class="text-2xl">Trending posts</h2>
             <posts-carousel
-                [posts]="highlightedPosts()" 
+                [posts]="landingPosts() || []" 
                 [layoutType]="cardLayout.BIG"
-                [spaceBetween]="0"
+                [spaceBetween]="16"
             ></posts-carousel>
         </div>
     </div>
 
     <!--FILTERS-->
-    <post-search-form></post-search-form>
+    <post-search-form [currentSearchValue]="postSearchService.search()"></post-search-form>
 
-    <!--POSTS LIST-->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        @for (post of posts(); track post.id) {
+    <!--POSTS GRID-->
+    <div class=" h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (post of landingPosts() || []; track post.id) {
             <post-card [post]="post"  [layoutType]="cardLayout.SMALL"></post-card>
         }
     </div>
+
+    @if(landingPosts().length) {
+        <div class="w-full flex justify-center">
+            <button (click)="addPage()" [disabled]="!showMoreButton()" class="btn btn-primary">Mostrar más</button>
+        </div>
+    }
+    
 </main>

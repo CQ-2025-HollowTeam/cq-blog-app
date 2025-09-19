@@ -9,4 +9,4 @@ import { FrontFooterComponent } from '../../components/front-footer/front-footer
   templateUrl: './blog-front-layout.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlogFrontLayoutComponent { }
+export class BlogFrontLayoutComponent {}

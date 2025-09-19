@@ -3,11 +3,16 @@
 
     <section class="flex flex-col gap-4">
         <div class="flex justify-between">
-            <post-search-form></post-search-form>
+            <post-search-form [currentSearchValue]="postSearchFilters.search()"></post-search-form>
             <button routerLink="/admin/post/new" class="btn btn-neutral">Nuevo Post</button>
         </div>
 
-        <posts-table [posts]="posts()"></posts-table>
+        <posts-table [posts]="postsResource.value()?.data ?? []"></posts-table>
+        <pagination 
+            [currentPage]="paginationService.currentPage()"
+            [perPage]="postsPerPage()"
+            [total]="postsResource.value()?.meta?.total ?? 0"
+        ></pagination>
     </section>
 </main> 
 

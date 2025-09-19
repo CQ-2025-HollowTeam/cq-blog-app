@@ -55,8 +55,7 @@ export class PostsCarouselComponent implements AfterViewInit {
         disableOnInteraction: true,
       },
       speed: this.autoplaySpeed,
-      spaceBetween: this.spaceBetween(),
-      
+      spaceBetween: this.spaceBetween(),      
     });
 
     this.setupAutoplaySpeed();

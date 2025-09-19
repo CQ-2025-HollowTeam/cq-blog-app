@@ -1,238 +1,45 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { Post } from '../../../posts/interfaces/post.interface';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PostSearchFormComponent } from '../../../posts/components/post-search-form/post-search-form.component';
 import { PostsTableComponent } from '../../../posts/components/posts-table/posts-table.component';
 import { RouterLink } from '@angular/router';
+import { PostService } from '../../../posts/services/post.service';
+import { rxResource } from '@angular/core/rxjs-interop'
+import { PaginationService } from '../../../shared/pagination/pagination.service';
+import { PaginationComponent } from '../../../shared/pagination/pagination.component';
+import { PostSearchService } from '../../../posts/components/post-search-form/post-search.service';
 
 @Component({
   selector: 'app-posts-admin-page',
   imports: [
     PostSearchFormComponent,
     PostsTableComponent,
-    RouterLink
+    RouterLink,
+    PaginationComponent
   ],
   templateUrl: './posts-admin-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsAdminPageComponent {
 
-  posts = signal<Post[]>([
-    {
-      id: '123233',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/8b0gaETkTXeL6iB3f1Pn_ASTRO.jpg',
-      categories: ['Astro'],
-    },
-    {
-      id: '142323',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/ZQiNIKAJR4upzwEpMIVt_C-SHARP-COVER%20(1).jpg',
-      categories: ['C#', 'Java', 'Angular'],
-    },
-    {
-      id: '12353',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/MtehrUISVW8hP7CfCWV1_DOCKER.jpg',
-      categories: ['Docker'],
-    },
-    {
-      id: '124563',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/61TYzXMSTaKdnKUemoIn_FLUTTER-MOVIL-DE-CERO-A-EXPERTO.jpg',
-      categories: ['Flutter'],
-    },
-    {
-      id: '12673',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/T6It7zuNQPWizrBJvbaX_NEST-NEW.jpg',
-      categories: ['Nest'],
-    },
-    {
-      id: '12379',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/rJCXtKQUQSmgJSQbArul_java-avanzado-devtalles.jpg',
-      categories: ['Java'],
-    },
-    {
-      id: '18923',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/8b0gaETkTXeL6iB3f1Pn_ASTRO.jpg',
-      categories: ['Astro'],
-    },
-    {
-      id: '12083',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/ZQiNIKAJR4upzwEpMIVt_C-SHARP-COVER%20(1).jpg',
-      categories: ['C#'],
-    },
-    {
-      id: '123779',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/MtehrUISVW8hP7CfCWV1_DOCKER.jpg',
-      categories: ['Docker'],
-    },
-    {
-      id: '68123',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/61TYzXMSTaKdnKUemoIn_FLUTTER-MOVIL-DE-CERO-A-EXPERTO.jpg',
-      categories: ['Flutter'],
-    },
-    {
-      id: '125673',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/T6It7zuNQPWizrBJvbaX_NEST-NEW.jpg',
-      categories: ['Nest'],
-    },
-    {
-      id: '12563',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/rJCXtKQUQSmgJSQbArul_java-avanzado-devtalles.jpg',
-      categories: ['Java'],
-    },
-    {
-      id: '12463',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/8b0gaETkTXeL6iB3f1Pn_ASTRO.jpg',
-      categories: ['Astro'],
-    },
-    {
-      id: '12468783',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/ZQiNIKAJR4upzwEpMIVt_C-SHARP-COVER%20(1).jpg',
-      categories: ['C#'],
-    },
-    {
-      id: '1263',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/MtehrUISVW8hP7CfCWV1_DOCKER.jpg',
-      categories: ['Docker'],
-    },
-    {
-      id: '12363',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/61TYzXMSTaKdnKUemoIn_FLUTTER-MOVIL-DE-CERO-A-EXPERTO.jpg',
-      categories: ['Flutter'],
-    },
-    {
-      id: '134623',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/T6It7zuNQPWizrBJvbaX_NEST-NEW.jpg',
-      categories: ['Nest'],
-    },
-    {
-      id: '12653',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/rJCXtKQUQSmgJSQbArul_java-avanzado-devtalles.jpg',
-      categories: ['Java'],
-    },
-    {
-      id: '12523',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/8b0gaETkTXeL6iB3f1Pn_ASTRO.jpg',
-      categories: ['Astro'],
-    },
-    {
-      id: '135423',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/ZQiNIKAJR4upzwEpMIVt_C-SHARP-COVER%20(1).jpg',
-      categories: ['C#'],
-    },
-    {
-      id: '13423',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/MtehrUISVW8hP7CfCWV1_DOCKER.jpg',
-      categories: ['Docker'],
-    },
-    {
-      id: '11223',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/61TYzXMSTaKdnKUemoIn_FLUTTER-MOVIL-DE-CERO-A-EXPERTO.jpg',
-      categories: ['Flutter'],
-    },
-    {
-      id: '12323',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/T6It7zuNQPWizrBJvbaX_NEST-NEW.jpg',
-      categories: ['Nest'],
-    },
-    {
-      id: '34223',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/rJCXtKQUQSmgJSQbArul_java-avanzado-devtalles.jpg',
-      categories: ['Java'],
+  postService = inject(PostService);
+  paginationService = inject(PaginationService);
+  postSearchFilters = inject(PostSearchService);
+
+  postsPerPage = signal<number>(3);
+
+  postsResource = rxResource({
+    params: () => ({
+      page: this.paginationService.currentPage(),
+      limit: this.postsPerPage(),
+      search: this.postSearchFilters.search(),
+    }),
+    stream: ({params}) => {
+      return this.postService.getPosts({
+        page: params.page,
+        limit: params.limit,
+        search: params.search,
+      });
     }
-  ]);
+  });
 
 }

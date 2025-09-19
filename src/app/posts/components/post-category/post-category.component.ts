@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Category } from '../../interfaces/post.interface';
 
 @Component({
   selector: 'post-category',
@@ -7,5 +8,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostCategoryComponent {
-  category = input<string>();
+  category = input<Category>();
 }

@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs';
-import { Post } from '../../../posts/interfaces/post.interface';
 import { PostsCarouselComponent } from '../../../posts/components/posts-carousel/posts-carousel.component';
 import { PostCategoryComponent } from '../../../posts/components/post-category/post-category.component';
 import { PostCommentsComponent } from '../../../post-comments/components/post-comments/post-comments.component';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { CardLayout } from '../../../posts/components/post-card/post-card.component';
+import { PostService } from '../../../posts/services/post.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { PostImagePipe } from '../../../posts/pipes/post-image.pipe';
 
 @Component({
   selector: 'app-post-page',
@@ -16,7 +18,8 @@ import { CardLayout } from '../../../posts/components/post-card/post-card.compon
     PostCategoryComponent, 
     PostCommentsComponent, 
     DatePipe, 
-    UpperCasePipe
+    UpperCasePipe,
+    PostImagePipe
   ],
   templateUrl: './post-page.component.html',
   styleUrl: './post-page.component.css',
@@ -25,6 +28,7 @@ import { CardLayout } from '../../../posts/components/post-card/post-card.compon
 export class PostPageComponent {
 
   activatedRoute = inject(ActivatedRoute);
+  postService = inject(PostService);
 
   postId = toSignal(
     this.activatedRoute.params.pipe(
@@ -33,7 +37,17 @@ export class PostPageComponent {
     )
   );
 
-  post = signal<Post>(
+  postResource = rxResource({
+    params: () => ({
+      postId: this.postId(),
+    }),
+    stream: ({params}) => {
+      return this.postService.getPostById(params.postId);
+    }
+  });
+
+
+  post = signal<any>(
     {
       id: '123',
       authorId: '1234',
@@ -115,7 +129,7 @@ export class PostPageComponent {
     },
   );
 
-  highlightedPosts = signal<Post[]>([
+  highlightedPosts = signal<any[]>([
     {
       id: '123',
       authorId: '1234',
