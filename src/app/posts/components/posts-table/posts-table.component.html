@@ -14,7 +14,7 @@
         <tbody>
             @for (post of posts(); track post.id; let i = $index) {
                 <tr [routerLink]="['/admin/post/', post.id]" class="hover:bg-base-100 cursor-pointer">
-                    <th><img class="w-32" [src]="post.image | postImage" [alt]="post.title"></th>
+                    <th><img class="w-32 h-20 object-cover" [src]="post.image | postImage" [alt]="post.title"></th>
                     <td>{{ post.title }}</td>
                     <td> Author Name</td>
                     <td class="flex gap-2 flex-wrap max-w-52">
