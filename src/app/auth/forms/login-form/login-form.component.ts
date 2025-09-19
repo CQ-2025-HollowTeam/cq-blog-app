@@ -9,7 +9,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormUtils } from '../../../shared/utils/form-utils';
 import { AuthService } from '../../services/auth.service';
 import { HttpStatusCode } from '@angular/common/http';
-import { APIError } from '@shared/interfaces/error.interface';
 
 @Component({
     selector: 'login-form',
@@ -42,23 +41,15 @@ export class LoginFormComponent {
         const username = this.form.get('username')?.value ?? '';
         const password = this.form.get('password')?.value ?? '';
 
-        this.authService.login({ username, password }).subscribe({
-            next: ({ token }) => this.loginSuccess(token),
-            error: (error: APIError) => this.loginError(error),
-        });
+        this.authService
+            .login({ username, password })
+            .subscribe((isAuthenticated) => {
+                if (isAuthenticated) window.location.reload();
+            });
     }
 
     loginSuccess(token: string) {
         localStorage.setItem('auth_token', token);
         this.onLogin.emit();
-    }
-
-    loginError(error: APIError) {
-        switch (error.status) {
-            case HttpStatusCode.Unauthorized:
-                // TODO: Añadir alertas
-                console.error('Login failed: Unauthorized', error);
-                break;
-        }
     }
 }

@@ -1,16 +1,23 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 import { User } from '@shared/interfaces/user.interface';
-import { Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
     private http = inject(HttpClient);
     private baseUrl: string = environment.apiUrl;
 
-    getUser(): Observable<User> {
-        return this.http.get<User>(`${this.baseUrl}/user`);
+    private _user = signal<User | null>(null);
+
+    user = computed<User | null>(() => this._user());
+
+    getUser(): Observable<User | null> {
+        return this.http.get<User>(`${this.baseUrl}/user`).pipe(
+            tap((user) => this._user.set(user)),
+            catchError((error: any) => this.handleUserError(error))
+        );
     }
 
     getUserMock(): Observable<User> {
@@ -24,5 +31,14 @@ export class UserService {
             createdAt: new Date('2023-01-15T10:00:00Z'),
             updatedAt: new Date('2023-10-20T15:30:00Z'),
         });
+    }
+
+    clearUser() {
+        this._user.set(null);
+    }
+
+    private handleUserError(error: any): Observable<null> {
+        console.error('UserService error:', error);
+        return of(null);
     }
 }
