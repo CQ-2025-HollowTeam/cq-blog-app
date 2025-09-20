@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "primeicons/primeicons.css";
 @plugin "daisyui" {
     themes: light --default;
     exclude: rootcolor;
@@ -10,7 +11,7 @@
     color-scheme: "dark";
     --color-base-100: oklch(36.94% 0.125 299.24);
     --color-base-200: oklch(21.47% 0.069 289.05);
-    --color-base-300: oklch(0% 0 0);
+    --color-base-300: #130C25;
     --color-base-content: oklch(100% 0 0);
     --color-primary: oklch(89.83% 0.063 308.18);
     --color-primary-content: oklch(17.96% 0.05 293.68);
@@ -38,6 +39,12 @@
     --noise: 0;
 }
 
+::selection {
+  background-color: oklch(36.94% 0.125 299.24);
+  color: #fff;
+}
+
 :root {
     background-color: var(--color-base-200);
 }
+

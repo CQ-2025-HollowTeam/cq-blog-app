@@ -1,0 +1,16 @@
+:host ::ng-deep .swiper-pagination-bullet-active {
+  background-color: rgb(255, 255, 255) !important; /* Cambia a tu color deseado */
+}
+:host ::ng-deep .swiper-pagination-bullet {
+  background-color: rgb(255, 255, 255) !important; /* Cambia a tu color deseado */
+  width: 8px;
+  height: 8px;
+}
+
+:host ::ng-deep .swiper-slide {
+  width: auto;
+}
+
+:host ::ng-deep .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 0px;
+}

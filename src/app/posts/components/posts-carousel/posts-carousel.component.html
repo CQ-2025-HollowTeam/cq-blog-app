@@ -1,0 +1,12 @@
+<div class="swiper" #swiperDiv>
+    <div class="swiper-wrapper pb-8">
+        @for (post of posts(); track post.id) {
+            <div class="swiper-slide">
+                <post-card [post]="post" [layoutType]="layoutType()"></post-card>
+            </div>
+        }@empty {
+            <p class="text-center">En este momento no hay posts para mostrar.</p>
+        }
+    </div>
+    <div class="swiper-pagination"></div>
+</div>
