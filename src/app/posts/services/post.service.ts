@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Post, PostsResponse } from '../interfaces/post.interface';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 interface Options {
   limit?: number;
@@ -35,5 +35,11 @@ export class PostService {
 
     return this.http.get<Post>(`${this.baseUrl}/posts/${id}`);
   }
+
+     getPostBySlug(slug: string): Observable<Post> {
+        return this.http.get<Post>(`${this.baseUrl}/posts`, {
+            params: { slug },
+        });
+    }
 
 }

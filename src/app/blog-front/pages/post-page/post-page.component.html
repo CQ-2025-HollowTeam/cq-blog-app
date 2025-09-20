@@ -1,7 +1,7 @@
 <article class="flex flex-col gap-8 pb-8"> 
     <!--Header-->
     <section class="relative">
-        <img class="w-full h-80 object-cover opacity-60" [src]="postResource.value()?.image | postImage" [alt]="post().title">
+        <img class="w-full h-80 object-cover opacity-60" [src]="postResource.value()?.image | postImage" [alt]="postResource.value()?.title">
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-base-200 to-transparent"></div>
         <div class="absolute bottom-0 flex flex-col gap-2 p-4 w-full">
             <h1 class="text-4xl">{{ postResource.value()?.title }}</h1>

@@ -19,7 +19,7 @@ export const blogFrontroutes: Routes = [
                 component: ProfilePageComponent,
             },
             {
-                path: 'post/:idSlug',
+                path: 'post/:slug',
                 component: PostPageComponent,
             },
             {
