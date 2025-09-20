@@ -7,7 +7,7 @@ import { catchError, Observable, of, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UserService {
     private http = inject(HttpClient);
-    private baseUrl: string = environment.apiUrl;
+    private baseUrl: string = environment.baseUrl;
 
     private _user = signal<User | null>(null);
 

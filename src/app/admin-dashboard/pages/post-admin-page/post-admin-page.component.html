@@ -1,1 +1,32 @@
-<p>post-admin-page works!</p>,
+<form class="h-ful w-full py-8 px-4 grid grid-cols-[3fr_1fr] gap-8">
+
+    <div class="flex flex-col gap-5">
+        <!--TITLE-->
+        <div>
+            <fieldset class="fieldset p-0">
+                <legend class="fieldset-legend">Título del post</legend>
+                <input type="text" class="input w-full bg-base-200" placeholder="Escribe un título..." />
+            </fieldset>
+        </div>
+
+        <!--IMAGE-->
+        <div>
+            <fieldset class="fieldset p-0">
+                <legend class="fieldset-legend">Imagen de portada</legend>
+                <input type="file" class="file-input bg-base-200 w-full" />
+            </fieldset>
+        </div>
+
+        <!--EDITOR DE TEXTO-->
+        <div>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Contenido</legend>
+                <text-editor></text-editor>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="card-border rounded-2xl p-4">
+        <p>Etiquetas</p>
+    </div>
+</form>

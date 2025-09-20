@@ -42,9 +42,9 @@
             <ng-content />
         </main>
     </div>
-    @if(modal()){
-    <form method="dialog" class="modal-backdrop">
+    <form method="dialog" class="modal-backdrop bg-black opacity-10">
+        @if(modal()){
         <button class="cursor-default!" (click)="close()"></button>
+        }
     </form>
-    }
 </dialog>

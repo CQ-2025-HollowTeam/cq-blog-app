@@ -1,0 +1,28 @@
+* Estilos personalizados para TinyMCE */
+
+/* Cambia el color de fondo de la barra de herramientas y la barra de estado */
+:host ::ng-deep .tox-toolbar-overlord,
+:host ::ng-deep .tox-statusbar {
+  background-color: #2b3a4a !important;
+  color: #fff !important;
+}
+
+/* Cambia el color de fondo del contenedor principal del editor */
+:host ::ng-deep .tox-editor-container {
+  background-color: #f5f5f5 !important;
+}
+
+/* Cambia el color de los botones en la barra de herramientas */
+:host ::ng-deep .tox-tbtn {
+  color: #fff !important;
+}
+
+/* Cambia el color de los iconos SVG en los botones */
+:host ::ng-deep .tox-tbtn__icon svg {
+  fill: #fff !important;
+}
+
+/* Cambia el color de los botones al pasar el ratón por encima */
+:host ::ng-deep .tox-tbtn:hover {
+  background-color: #3f516a !important;
+}

@@ -19,19 +19,19 @@ export const blogFrontroutes: Routes = [
                 component: ProfilePageComponent,
             },
             {
-                path: 'post/:idSlug',
+                path: 'post/:slug',
                 component: PostPageComponent,
             },
             {
                 path: '**',
                 component: NotFoundPageComponent,
-            }
-        ]
+            },
+        ],
     },
     {
         path: '**',
         redirectTo: '',
-    }
+    },
 ];
 
 export default blogFrontroutes;

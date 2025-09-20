@@ -11,7 +11,7 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 export class AuthService {
     private http = inject(HttpClient);
     private userService = inject(UserService);
-    private baseUrl: string = `${environment.apiUrl}/auth`;
+    private baseUrl: string = `${environment.baseUrl}/auth`;
 
     private _token = signal<string | null>(localStorage.getItem('token'));
 

@@ -1,0 +1,47 @@
+@if(layoutType() == cardLayout.SMALL) {
+  <div [routerLink]="['post', post().slug]" class="w-full min-h-80 h-full flex flex-col rounded-2xl card-border overflow-hidden transition duration-300 hover:bg-base-100 bg-base-200 shadow-sm hover:cursor-pointer group">
+    <figure class="overflow-hidden">
+      <img
+        [src]="post().image | postImage"
+        [alt]="post().title"
+        class="h-40 w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105" 
+      />
+    </figure>
+    <div class="grow justify-between p-6 flex flex-col">
+      <h2 class="card-title">
+        {{ post().title }}
+      </h2>
+      <div class="card-actions justify-between items-center">
+          <p class="text-gray-400">{{ post().createdAt | date | uppercase }}</p>
+          @for (category of post().categories; track $index) {
+            <post-category [category]="category"></post-category>
+          }
+      </div>
+    </div>
+  </div>
+}
+@if(layoutType() == cardLayout.BIG) {
+  <div class="sm:h-60 flex flex-col sm:flex-row gap-6 bg-base-200 shadow-sm hover:cursor-pointer">
+    <figure class="w-full">
+      <img
+        [src]="post().image | postImage"
+        [alt]="post().title" 
+        class="h-full w-full object-cover rounded-2xl"
+      />
+    </figure>
+    <div class="flex flex-col justify-between sm:pt-0 py-0">
+      <div class="flex flex-col gap-2">
+        <h2 class="card-title text-3xl">{{ post().title }}</h2>
+        <p>{{ post().content }}</p>
+      </div>
+      <div class="card-actions justify-end">
+          <p class="text-gray-400">{{ post().createdAt | date | uppercase }}</p>
+          @for (category of post().categories; track $index) {
+            <post-category [category]="category"></post-category>
+          }
+      </div>
+    </div>
+  </div>
+}
+
+

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
     {
@@ -9,11 +8,6 @@ export const routes: Routes = [
     {
         path: 'admin',
         loadChildren: () => import('./admin-dashboard/admin-dashboard.routes'),
-    },
-    {
-        path: 'profile',
-        // TODO: añadir guard de autenticación
-        component: ProfileComponent,
     },
     {
         path: '',
