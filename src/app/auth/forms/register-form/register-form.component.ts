@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    output,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import {
@@ -18,6 +23,7 @@ export class RegisterFormComponent {
     private fb = inject(FormBuilder);
     private authService = inject(AuthService);
     formUtils = FormUtils;
+    onRegister = output<void>();
 
     form = this.fb.group(
         {
@@ -28,7 +34,15 @@ export class RegisterFormComponent {
                 [emailValidator()],
             ],
             username: ['', [Validators.required], [usernameValidator()]],
-            password: ['', Validators.required],
+            password: [
+                '',
+                [
+                    Validators.required,
+                    Validators.pattern(
+                        /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+                    ),
+                ],
+            ],
             confirmPassword: ['', Validators.required],
         },
         {
@@ -48,7 +62,11 @@ export class RegisterFormComponent {
         const email = this.form.get('email')?.value ?? '';
         const username = this.form.get('username')?.value ?? '';
         const password = this.form.get('password')?.value ?? '';
-        this.authService.register({ name, email, username, password });
+        this.authService
+            .register({ name, email, username, password })
+            .subscribe((isAuthenticated) => {
+                if (isAuthenticated) this.onRegister.emit();
+            });
     }
 
     resetForm() {

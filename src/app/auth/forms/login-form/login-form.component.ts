@@ -8,7 +8,7 @@ import {
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormUtils } from '../../../shared/utils/form-utils';
 import { AuthService } from '../../services/auth.service';
-import { HttpStatusCode } from '@angular/common/http';
+import { environment } from '@environments/environment';
 
 @Component({
     selector: 'login-form',
@@ -28,6 +28,8 @@ export class LoginFormComponent {
 
     onLogin = output<void>();
 
+    oauthUrl = `${environment.baseUrl}/auth/discord`;
+
     resetForm() {
         this.form.markAsUntouched();
         this.form.markAsPristine();
@@ -44,12 +46,7 @@ export class LoginFormComponent {
         this.authService
             .login({ username, password })
             .subscribe((isAuthenticated) => {
-                if (isAuthenticated) window.location.reload();
+                if (isAuthenticated) this.onLogin.emit();
             });
-    }
-
-    loginSuccess(token: string) {
-        localStorage.setItem('auth_token', token);
-        this.onLogin.emit();
     }
 }

@@ -40,7 +40,7 @@
 <!-- Dialog de Registro -->
 <modal-dialog
     [(open)]="registerDialog"
-    (onClose)="registerForm.resetForm()"
+    (onClose)="registerForm.resetForm(); registerDialog.set(false)"
     [showClose]="true"
     size="s"
 >

@@ -23,7 +23,7 @@ export class AuthService {
             .pipe(
                 map((resp) => this.handleAuthSuccess(resp)),
                 tap((success) => {
-                    if (success) this.userService.getUser().subscribe();
+                    // todo: si el registro es exitoso, obtener los datos del usuario
                 }),
                 catchError((error: any) => this.handleAuthError(error))
             );
@@ -35,7 +35,15 @@ export class AuthService {
         username: string;
         password: string;
     }) {
-        console.log('Registering with credentials:', credentials);
+        return this.http
+            .post<{ token: string }>(`${this.baseUrl}/register`, credentials)
+            .pipe(
+                map((resp) => this.handleAuthSuccess(resp)),
+                tap((success) => {
+                    // todo: si el registro es exitoso, obtener los datos del usuario
+                }),
+                catchError((error: any) => this.handleAuthError(error))
+            );
     }
 
     // Este método hace la llamada al backend
@@ -59,7 +67,7 @@ export class AuthService {
 
     private handleAuthSuccess({ token }: { token: string }) {
         this._token.set(token);
-        localStorage.setItem('token', token);
+        localStorage.setItem('auth_token', token);
         return true;
     }
 
