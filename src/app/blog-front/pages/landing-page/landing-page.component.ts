@@ -5,7 +5,6 @@ import { PostsCarouselComponent } from '../../../posts/components/posts-carousel
 import { PostService } from '../../../posts/services/post.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PostSearchService } from '../../../posts/components/post-search-form/post-search.service';
-import { sign } from 'crypto';
 import { Post } from '../../../posts/interfaces/post.interface';
 import { tap } from 'rxjs';
 
@@ -42,6 +41,8 @@ export class LandingPageComponent {
       search: this.postSearchService.search(),
       limit: this.limit,
       page: this.currentPage(),
+      categories: this.postSearchService.category(),
+      author: this.postSearchService.author(),
     }),
     stream: ({ params }) => {
       return this.postService.getPosts(params).pipe(
@@ -60,6 +61,13 @@ export class LandingPageComponent {
           }
         })
       );
+    }
+  });
+
+  trendingPostsResource = rxResource({
+    params: () => ({}),
+    stream: ({params}) => {
+      return this.postService.getTrendingPosts();
     }
   });
 

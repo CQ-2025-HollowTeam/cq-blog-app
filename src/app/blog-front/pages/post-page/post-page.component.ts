@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs';
 import { PostsCarouselComponent } from '../../../posts/components/posts-carousel/posts-carousel.component';
-import { PostCategoryComponent } from '../../../posts/components/post-category/post-category.component';
+import { PostCategoryComponent } from '../../../categories/components/post-category/post-category.component';
 import { PostCommentsComponent } from '../../../post-comments/components/post-comments/post-comments.component';
 import { DatePipe, UpperCasePipe } from '@angular/common';
 import { CardLayout } from '../../../posts/components/post-card/post-card.component';
 import { PostService } from '../../../posts/services/post.service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PostImagePipe } from '../../../posts/pipes/post-image.pipe';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-page',
@@ -29,57 +30,34 @@ export class PostPageComponent {
 
   activatedRoute = inject(ActivatedRoute);
   postService = inject(PostService);
+  sanitizer = inject(DomSanitizer);
 
-  cardLayout = CardLayout;
+  safeContent = signal<SafeHtml>('');
 
-  postSlug = toSignal(
-    this.activatedRoute.params.pipe(map(params => params['slug']))
+  postId = toSignal(
+    this.activatedRoute.params.pipe(
+      map(params => params['slug']),
+    )
   );
 
   postResource = rxResource({
-    params: () => ({  postSlug: this.postSlug() }),
-    stream: ({params}) => this.postService.getPostBySlug(params.postSlug)
+    params: () => ({
+      postId: this.postId(),
+    }),
+    stream: ({params}) => {
+      return this.postService.getPostById(params.postId).pipe(
+        tap(post => {
+          this.safeContent.set(this.sanitizer.bypassSecurityTrustHtml(post.content));
+        }),
+        switchMap(post => {
+          return this.postService.getPosts({categories: post.categories.map(cat => cat.slug).join(',')}).pipe(
+            map(relatedPosts => ({ post, relatedPosts }))
+          )
+        }),
+      );
+    }
   });
 
+  cardLayout = CardLayout;
 
-  highlightedPosts = signal<any[]>([
-    {
-      id: '123',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/T6It7zuNQPWizrBJvbaX_NEST-NEW.jpg',
-      categories: ['Nest'],
-      comments: [
-        {
-          id: 1,
-          authorId: '123',
-          content: 'Bla bla bla bla bla bla bla',
-          post: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }
-      ],
-    },
-    {
-      id: '123',
-      authorId: '1234',
-      title: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-      content: 'Lorem ipsum dolor sit acta officia natus debitis neque saepe quisquam iste fugiat architecto maxime at fugit obcaecati optio, voluptatem dolorem asperiores aliquid ipsum doloribus..',
-      createdAt: new Date(),
-      image: 'https://import.cdn.thinkific.com/643563/61TYzXMSTaKdnKUemoIn_FLUTTER-MOVIL-DE-CERO-A-EXPERTO.jpg',
-      categories: ['Flutter'],
-      comments: [
-        {
-          id: 1,
-          authorId: '123',
-          content: 'Bla bla bla bla bla bla bla',
-          post: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }
-      ],
-    }
-  ]);
 }

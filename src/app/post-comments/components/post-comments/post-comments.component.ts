@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
-import { Comment } from '../../interfaces/comment.interface';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { PostCommentComponent } from '../post-comment/post-comment.component';
 import { CommentInputFormComponent } from '../comment-input-form/comment-input-form.component';
+import { CommentService } from '../../services/comment.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'post-comments',
@@ -12,6 +13,17 @@ import { CommentInputFormComponent } from '../comment-input-form/comment-input-f
 })
 export class PostCommentsComponent {
 
-  comments = input.required<Comment[]>();
+  postId = input.required<number>();
+
+  commentService = inject(CommentService);
+
+  commentResource = rxResource({
+    params: () => ({
+      postId: this.postId(),
+    }),
+    stream: ({params}) => {
+      return this.commentService.getPostCommments(params.postId!);
+    }
+  });
 
 }

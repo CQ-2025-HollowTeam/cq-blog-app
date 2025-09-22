@@ -1,3 +1,6 @@
+import { User } from "../../authors/interfaces/user.interface";
+import { Category } from "../../categories/interfaces/category.interface";
+
 export interface PostsResponse {
     data: Post[];
     meta: Meta;
@@ -15,35 +18,6 @@ export interface Post {
     author:     User;
     image?:     string; //Cambiar cuando se implemente
     comments?:   Comment[];
-}
-
-export interface User {
-    id:        string;
-    username:  string;
-    email:     string;
-    name:      string;
-    password:  string;
-    role:      number;
-    isActive:  boolean;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export interface Category {
-    id:        number;
-    name:      string;
-    slug:      string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export interface Comment {
-    id:        number;
-    content:   string;
-    authorId:  string;
-    postId:    number;
-    createdAt: Date;
-    updatedAt: Date;
 }
 
 export interface Meta {

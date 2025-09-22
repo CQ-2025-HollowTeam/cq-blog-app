@@ -3,7 +3,11 @@
 
     <section class="flex flex-col gap-4">
         <div class="flex justify-between">
-            <post-search-form [currentSearchValue]="postSearchFilters.search()"></post-search-form>
+            <post-search-form 
+                [currentSearchValue]="postSearchService.search()" 
+                [currentCategoryValue]="postSearchService.category()"
+                [currentAuthorValue]="postSearchService.author()"
+            ></post-search-form>
             <button routerLink="/admin/post/new" class="btn btn-neutral">Nuevo Post</button>
         </div>
 

@@ -13,7 +13,22 @@ export class PostSearchService {
   search = toSignal(
     this.activatedRoute.queryParamMap.pipe(
       map(params => params.get('search') ?? ''),
-      tap(search => console.log('Search param:', search)),
+    ), {
+      initialValue: '',
+    }
+  );
+
+  category = toSignal(
+    this.activatedRoute.queryParamMap.pipe(
+      map(params => params.get('category') ?? ''),
+    ), {
+      initialValue: '',
+    }
+  );
+
+  author = toSignal(
+    this.activatedRoute.queryParamMap.pipe(
+      map(params => params.get('author') ?? ''),
     ), {
       initialValue: '',
     }

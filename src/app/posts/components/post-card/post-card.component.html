@@ -1,5 +1,5 @@
 @if(layoutType() == cardLayout.SMALL) {
-  <div [routerLink]="['post', post().slug]" class="w-full min-h-80 h-full flex flex-col rounded-2xl card-border overflow-hidden transition duration-300 hover:bg-base-100 bg-base-200 shadow-sm hover:cursor-pointer group">
+  <div [routerLink]="['post', post().id]" class="w-full min-h-80 h-full flex flex-col rounded-2xl card-border overflow-hidden transition duration-300 hover:bg-base-100 bg-base-200 shadow-sm hover:cursor-pointer group">
     <figure class="overflow-hidden">
       <img
         [src]="post().image | postImage"
@@ -21,7 +21,7 @@
   </div>
 }
 @if(layoutType() == cardLayout.BIG) {
-  <div class="sm:h-60 flex flex-col sm:flex-row gap-6 bg-base-200 shadow-sm hover:cursor-pointer">
+  <div [routerLink]="['post', post().id]" class="sm:h-60 flex flex-col sm:flex-row gap-6 bg-base-200 shadow-sm hover:cursor-pointer">
     <figure class="w-full">
       <img
         [src]="post().image | postImage"

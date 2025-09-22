@@ -23,7 +23,7 @@ export class PostsAdminPageComponent {
 
   postService = inject(PostService);
   paginationService = inject(PaginationService);
-  postSearchFilters = inject(PostSearchService);
+  postSearchService = inject(PostSearchService);
 
   postsPerPage = signal<number>(3);
 
@@ -31,13 +31,17 @@ export class PostsAdminPageComponent {
     params: () => ({
       page: this.paginationService.currentPage(),
       limit: this.postsPerPage(),
-      search: this.postSearchFilters.search(),
+      search: this.postSearchService.search(),
+      categories: this.postSearchService.category(),
+      author: this.postSearchService.author(),
     }),
     stream: ({params}) => {
       return this.postService.getPosts({
         page: params.page,
         limit: params.limit,
         search: params.search,
+        categories: params.categories,
+        author: params.author,
       });
     }
   });
