@@ -1,3 +1,13 @@
+@if (user()){
+<div class="flex gap-2">
+    <a class="btn" [routerLink]="['/profile']">
+        {{ user()?.username }}
+    </a>
+    <button class="btn btn-square bg-error" (click)="logout()">
+        <i class="pi pi-power-off"></i>
+    </button>
+</div>
+}@else{
 <!-- Botón de inicio de sesión -->
 <button class="btn btn-square" (click)="openLogin()">
     <svg
@@ -12,6 +22,7 @@
         />
     </svg>
 </button>
+}
 
 <!-- Dialog de inicio de sesión -->
 <modal-dialog
@@ -31,8 +42,9 @@
             <a
                 (click)="loginForm.resetForm(); openRegister()"
                 class="cursor-pointer link-hover"
-                >Regístrate</a
             >
+                Regístrate
+            </a>
         </p>
     </div>
 </modal-dialog>
@@ -63,7 +75,10 @@
         <h2>Crear cuenta</h2>
     </header>
     <div class="flex flex-col gap-4">
-        <register-form #registerForm />
+        <register-form
+            #registerForm
+            (onRegister)="registerForm.resetForm(); registerDialog.set(false)"
+        />
         <p class="text-center">
             Ya tienes cuenta?
             <a

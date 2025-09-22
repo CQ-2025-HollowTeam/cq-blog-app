@@ -41,7 +41,6 @@ export class ChangePasswordFormComponent {
     updatePassword() {
         this.form.markAllAsTouched();
         if (this.form.invalid) return;
-        // Todo: Hacer petición para actualizar la contraseña
         this.onSubmit.emit({ ...this.user(), ...this.form.value } as User);
     }
 }

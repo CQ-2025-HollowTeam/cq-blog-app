@@ -1,6 +1,8 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    computed,
+    effect,
     inject,
     signal,
 } from '@angular/core';
@@ -11,6 +13,8 @@ import { ProfileFormComponent } from './components/profile-form/profile-form.com
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import { ToggleGroupComponent } from '@shared/components/toggle-group/toggle-group.component';
 import { User } from '@shared/interfaces/user.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 
 enum Tabs {
     INFO = 1,
@@ -29,8 +33,25 @@ enum Tabs {
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePageComponent {
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
     private userService = inject(UserService);
+
     Tabs = Tabs;
+
+    selfUser = computed(this.userService.user);
+    userId = toSignal(
+        this.activatedRoute.params.pipe(map((params) => params['userId']))
+    );
+
+    editable = computed(() => (this.userId() ? false : true));
+
+    selfUserEffect = effect(() => {
+        const userId = this.userId();
+        const selfUserId = this.selfUser()?.id;
+        const isSelf = userId === selfUserId;
+        if (isSelf) this.router.navigate(['/profile']);
+    });
 
     tabs = [
         { label: 'Información Personal', value: Tabs.INFO },
@@ -38,11 +59,14 @@ export class ProfilePageComponent {
     ];
     activeTab = signal<Tabs>(Tabs.INFO);
 
-    editable = signal(false);
-
     userResource = rxResource({
-        params: () => ({}),
-        stream: () => this.userService.getUserMock(),
+        params: () => ({ userId: this.userId() }),
+        stream: ({ params }) => {
+            const userId = params.userId;
+
+            if (userId) return this.userService.getUserById(userId);
+            return this.userService.getUser();
+        },
     });
 
     updateUser(user: User) {

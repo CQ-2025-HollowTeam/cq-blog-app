@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import {
     ChangeDetectionStrategy,
     Component,
@@ -15,7 +15,7 @@ import { FormUtils } from '@shared/utils/form-utils';
 
 @Component({
     selector: 'register-form',
-    imports: [CommonModule, ReactiveFormsModule],
+    imports: [CommonModule, ReactiveFormsModule, JsonPipe],
     templateUrl: './register-form.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

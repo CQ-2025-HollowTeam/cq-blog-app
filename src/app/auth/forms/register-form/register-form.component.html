@@ -75,6 +75,13 @@
             *ngTemplateOutlet="formError; context: { field: 'confirmPassword' }"
         />
     </div>
+    @if(form.errors?.['passwordsMismatch']){
+    <div class="flex w-full">
+        <small class="form-text text-error">
+            Las contraseñas no coinciden
+        </small>
+    </div>
+    }
     <button class="btn w-full mt-4">Crear cuenta</button>
 </form>
 

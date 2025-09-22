@@ -9,7 +9,7 @@ export function usernameValidator(): AsyncValidatorFn {
     return (control: AbstractControl) => {
         return timer(500).pipe(
             switchMap(() =>
-                authService.checkUsername(control.value).pipe(
+                authService.checkUsernameOrEmail(control.value).pipe(
                     map((isTaken) =>
                         isTaken ? { usernameTaken: true } : null
                     ),
@@ -25,7 +25,7 @@ export function emailValidator(): AsyncValidatorFn {
     return (control: AbstractControl) => {
         return timer(500).pipe(
             switchMap(() =>
-                authService.checkEmail(control.value).pipe(
+                authService.checkUsernameOrEmail(control.value).pipe(
                     map((isTaken) => (isTaken ? { emailTaken: true } : null)),
                     catchError(() => of(null))
                 )

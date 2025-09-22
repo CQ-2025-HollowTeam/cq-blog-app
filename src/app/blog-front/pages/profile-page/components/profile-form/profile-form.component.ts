@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '@shared/interfaces/user.interface';
+import { UserService } from '@shared/services/user.service';
 import { FormUtils } from '@shared/utils/form-utils';
 
 @Component({
@@ -21,6 +22,7 @@ import { FormUtils } from '@shared/utils/form-utils';
 })
 export class ProfileFormComponent implements OnInit {
     private fb = inject(FormBuilder);
+    userService = inject(UserService);
     formUtils = FormUtils;
 
     user = input.required<User>();
@@ -51,8 +53,12 @@ export class ProfileFormComponent implements OnInit {
     updateUser() {
         this.form.markAllAsTouched();
         if (this.form.invalid) return;
-        // Todo: Hacer petición para actualizar el usuario
-        this.onSubmit.emit({ ...this.user(), ...this.form.value } as User);
-        this.editable.set(false);
+        const id = this.user().id;
+        if (!id) return;
+        const value = this.form.value;
+        this.userService.updateUser(id, value).subscribe(() => {
+            this.onSubmit.emit({ ...this.user(), ...this.form.value } as User);
+            this.editable.set(false);
+        });
     }
 }

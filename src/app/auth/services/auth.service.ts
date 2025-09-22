@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { environment } from '@environments/environment';
 import { UserService } from '@shared/services/user.service';
-import { Observable, of } from 'rxjs';
+import { firstValueFrom, Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -13,7 +14,11 @@ export class AuthService {
     private userService = inject(UserService);
     private baseUrl: string = `${environment.baseUrl}/auth`;
 
-    private _token = signal<string | null>(localStorage.getItem('token'));
+    checkStatusResource = rxResource({
+        stream: () => this.checkAuthStatus(),
+    });
+
+    private _token = signal<string | null>(localStorage.getItem('auth_token'));
 
     token = computed<string | null>(() => this._token());
 
@@ -23,7 +28,7 @@ export class AuthService {
             .pipe(
                 map((resp) => this.handleAuthSuccess(resp)),
                 tap((success) => {
-                    // todo: si el registro es exitoso, obtener los datos del usuario
+                    if (success) this.userService.getUser().subscribe();
                 }),
                 catchError((error: any) => this.handleAuthError(error))
             );
@@ -40,17 +45,18 @@ export class AuthService {
             .pipe(
                 map((resp) => this.handleAuthSuccess(resp)),
                 tap((success) => {
-                    // todo: si el registro es exitoso, obtener los datos del usuario
+                    if (success) this.userService.getUser().subscribe();
                 }),
                 catchError((error: any) => this.handleAuthError(error))
             );
     }
 
     // Este método hace la llamada al backend
-    checkUsername(username: string): Observable<boolean> {
-        return this.http
-            .get<{ answer: 'yes' | 'no' | 'maybe' }>(`${this.baseUrl}`)
-            .pipe(map((response) => response.answer === 'yes'));
+    checkUsernameOrEmail(value: string): Observable<boolean> {
+        return this.http.get<boolean>(
+            `${environment.baseUrl}/users/check-availability`,
+            { params: { value } }
+        );
     }
 
     // Este método hace la llamada al backend
@@ -62,7 +68,25 @@ export class AuthService {
 
     logout() {
         this._token.set(null);
-        localStorage.removeItem('token');
+        localStorage.removeItem('auth_token');
+    }
+
+    saveToken(token: string) {
+        this._token.set(token);
+        localStorage.setItem('auth_token', token);
+    }
+
+    checkAuthStatus(): Observable<boolean> {
+        const token = localStorage.getItem('auth_token');
+        if (!token) return of(false);
+        if (this.userService.user()) return of(true); // Evita petición si ya ha sido guardado con anterioridad
+
+        return this.userService.getUser().pipe(
+            map((user) => !!user),
+            tap((isAuthenticated) => {
+                if (!isAuthenticated) this.logout();
+            })
+        );
     }
 
     private handleAuthSuccess({ token }: { token: string }) {
