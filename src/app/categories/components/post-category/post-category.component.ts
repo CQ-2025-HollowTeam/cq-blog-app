@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { Category } from '../../interfaces/post.interface';
+import { Category } from '../../interfaces/category.interface';
+
 
 @Component({
   selector: 'post-category',

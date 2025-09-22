@@ -59,13 +59,6 @@ export class AuthService {
         );
     }
 
-    // Este método hace la llamada al backend
-    checkEmail(email: string): Observable<boolean> {
-        return this.http
-            .get<{ answer: 'yes' | 'no' | 'maybe' }>(`${this.baseUrl}`)
-            .pipe(map((response) => response.answer === 'yes'));
-    }
-
     logout() {
         this._token.set(null);
         localStorage.removeItem('auth_token');
@@ -74,6 +67,7 @@ export class AuthService {
     saveToken(token: string) {
         this._token.set(token);
         localStorage.setItem('auth_token', token);
+        this.userService.getUser().subscribe();
     }
 
     checkAuthStatus(): Observable<boolean> {

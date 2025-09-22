@@ -9,8 +9,8 @@
         <div class="w-full flex flex-col">
             <div class="rounded-2xl card-border p-4 flex flex-col gap-4">
                 <div class="flex gap-4 items-center">
-                    <p class="font-bold">Sergi Monzó</p>
-                    <p class="text-gray-400">15 ene 2025</p>
+                    <p class="font-bold">{{ comment().author.name }}</p>
+                    <p class="text-gray-400">{{ comment().updatedAt | date | uppercase }}</p>
                 </div>
                 <div>
                     <p>{{ comment().content }}</p>
@@ -19,32 +19,36 @@
 
             <!--ACTIONS BAR-->
             <div class="flex gap-4">
-                <button class="btn btn-ghost p-0">
-                    <span class="pi pi-thumbs-up"></span>
-                    15
+                <button class="btn btn-ghost p-0" (click)="addReaction()">
+                    @if(likedComment()) {
+                        <span class="pi pi-thumbs-up-fill"></span>
+                    } @else {
+                        <span class="pi pi-thumbs-up"></span>
+                    }
+                    {{ comment()._count?.reactions || 0 }}
                 </button>
                 <button (click)="toggleInputForm()" class="btn btn-ghost p-0">
                     <span class="pi pi-comment"></span>
                     Responder
                 </button>
-                @if(comment().comments) {
+                @if(comment().replies?.length) {
                     <button (click)="toggleShowReplies()" class="btn btn-ghost p-0">Mostrar respuestas</button>
                 }
             </div>
 
             <!--RESPONSE INPUT AND OTHER COMMENT RESPONSES-->
-            <div class="flex flex-col gap-4" [class.mt-4]="showInputForm() || comment().comments" >
+            <div class="flex flex-col gap-4" [class.mt-4]="showInputForm() || comment().reactions" >
                 <!--INPUT-->
                 @if(showInputForm()) {
-                    <comment-input-form></comment-input-form>
+                    <!--<comment-input-form></comment-input-form>-->
                 }
 
                 <!--COMMENT RESPONSES-->
-                @if(showReplies() && comment().comments) {
-                    @for (commentResponse of comment().comments; track commentResponse.id) {
+                <!--@if(showReplies() && comment().reactions) {
+                    @for (commentResponse of comment().reactions; track commentResponse.id) {
                         <post-comment [comment]="commentResponse"></post-comment>
                     }
-                }
+            }-->
             </div>
 
             

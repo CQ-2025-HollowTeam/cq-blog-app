@@ -15,7 +15,7 @@ import { FormUtils } from '@shared/utils/form-utils';
 
 @Component({
     selector: 'register-form',
-    imports: [CommonModule, ReactiveFormsModule, JsonPipe],
+    imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './register-form.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
