@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { CommentService } from '../../services/comment.service';
+import { Comment, NewComment } from '../../interfaces/comment.interface';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'comment-input-form',
@@ -10,7 +13,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class CommentInputFormComponent {
 
+  postId = input.required<number>();
+  newComment = output<Comment>();
+
+
   fb = inject(FormBuilder);
+  commentService = inject(CommentService);
 
   commentForm: FormGroup = this.fb.group({
     content: ['', Validators.required],
@@ -18,8 +26,20 @@ export class CommentInputFormComponent {
 
   showActionBar = signal<boolean>(false);
 
-  submit() {
+  async submit() {
     if(this.commentForm.invalid) return;
+
+    const newCommentLike: NewComment = {
+      authorId: '3c8df840-08f3-4eeb-a5b6-855fa91b0402', //TODO: Reemplazar por el ID de usuario autenticado
+      content: this.commentForm.value.content,
+      parentId: 0,
+    }
+
+    const newComment: Comment = await firstValueFrom(this.commentService.createComment(this.postId(), newCommentLike));
+    if(newComment) {
+      this.newComment.emit(newComment);
+      this.commentForm.reset();
+    }
   }
 
 }

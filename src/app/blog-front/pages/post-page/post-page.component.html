@@ -1,15 +1,15 @@
 <article class="flex flex-col gap-8 pb-8"> 
     <!--Header-->
     <section class="relative">
-        <img class="w-full h-80 object-cover opacity-60" [src]="postResource.value()?.image | postImage" [alt]="postResource.value()?.title">
+        <img class="w-full h-80 object-cover opacity-60" [src]="postResource.value()?.post?.image | postImage" [alt]="postResource.value()?.post?.title" />
         <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-base-200 to-transparent"></div>
         <div class="absolute bottom-0 flex flex-col gap-2 p-4 w-full">
-            <h1 class="text-4xl">{{ postResource.value()?.title }}</h1>
+            <h1 class="text-4xl">{{ postResource.value()?.post?.title }}</h1>
             <div class="flex items-center justify-between">
-                <p class="text-gray-400">{{ postResource.value()?.createdAt| date | uppercase }}</p>
+                <p class="text-gray-400">{{ postResource.value()?.post?.createdAt| date | uppercase }}</p>
                 <!--TAGS-->
                 <div class="flex gap-2">
-                    @for (category of postResource.value()?.categories; track $index) {
+                    @for (category of postResource.value()?.post?.categories; track $index) {
                         <post-category [category]="category"></post-category>
                     }
                 </div>
@@ -20,8 +20,10 @@
     <section class="flex flex-col sm:flex-row flex-wrap gap-8 px-4">
 
         <div class="sm:w-[calc(70%-16px)] flex flex-col gap-8">
-            <div [innerHTML]="postResource.value()?.content"></div>
-            <post-comments [comments]="postResource.value()?.comments ?? []"></post-comments>
+            @if(postResource.hasValue()) {
+                <div [innerHTML]="safeContent()"></div>
+                <post-comments [postId]="postResource.value().post.id"></post-comments>
+            }
         </div>
 
         <aside class="w-full sm:flex flex-col sm:w-[calc(30%-16px)] grid grid-cols-1 gap-5">
@@ -29,7 +31,7 @@
             <div class="flex flex-col gap-2">
                 <div class="flex gap-2">
                     <span class="pi pi-user text-gray-400 pt-1"></span>
-                    <p class="text-gray-400">Author</p>
+                    <p class="text-gray-400">Autor</p>
                 </div>
                 <div class="p-4 card-border rounded-2xl flex gap-2 items-center hover:cursor-pointer hover:bg-base-100">
                     <div class="avatar">
@@ -37,7 +39,7 @@
                             <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />
                         </div>
                     </div>
-                    <p>{{ postResource.value()?.author?.name }}</p>
+                    <p>{{ postResource.value()?.post?.author?.name }}</p>
                 </div>
             </div>
 
@@ -45,10 +47,10 @@
             <div class="flex flex-col gap-2">
                 <div class="flex gap-2">
                     <span class="pi pi-id-card text-gray-400 pt-1"></span>
-                    <p class="text-gray-400">Related posts</p>
+                    <p class="text-gray-400">Posts relacionados</p>
                 </div>
                 <posts-carousel 
-                    [posts]="highlightedPosts()" 
+                    [posts]="postResource.value()?.relatedPosts?.data ?? []" 
                     [layoutType]="cardLayout.SMALL"
                     [spaceBetween]="10"
                 ></posts-carousel>

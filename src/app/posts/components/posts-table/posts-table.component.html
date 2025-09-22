@@ -1,33 +1,34 @@
 <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-200">
-    <table class="table">
-        <!-- head -->
-        <thead>
-        <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Categories</th>
-            <th>Created At</th>
-            <th>Updated At At</th>
-        </tr>
-        </thead>
-        <tbody>
-            @for (post of posts(); track post.id; let i = $index) {
-                <tr [routerLink]="['/admin/post/', post.id]" class="hover:bg-base-100 cursor-pointer">
-                    <th><img class="w-32 h-20 object-cover" [src]="post.image | postImage" [alt]="post.title"></th>
-                    <td>{{ post.title }}</td>
-                    <td> Author Name</td>
-                    <td class="flex gap-2 flex-wrap max-w-52">
-                        @for (category of post.categories; track category) {
-                            <post-category [category]="category"></post-category>
-                        }
-                    </td>
-                    <td> {{ post.createdAt | date | uppercase}} </td>
-                    <td> {{ post.createdAt| date | uppercase}} </td>
-                </tr>
-            }@empty {
-                <p>Todavía no hay posts publicados.</p>
-            }   
-        </tbody>
-    </table>
+    @if(posts()) {
+        <table class="table">
+            <!-- head -->
+            <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Categories</th>
+                <th>Created At</th>
+                <th>Updated At At</th>
+            </tr>
+            </thead>
+            <tbody>
+                @for (post of posts(); track post.id; let i = $index) {
+                    <tr [routerLink]="['/admin/post/', post.id]" class="hover:bg-base-100 cursor-pointer">
+                        <th><img class="w-32 h-20 object-cover" [src]="post.image | postImage" [alt]="post.title"></th>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.author.name }}</td>
+                        <td class="flex gap-2 flex-wrap max-w-52">
+                            @for (category of post.categories; track category) {
+                                <post-category [category]="category"></post-category>
+                            }
+                        </td>
+                        <td> {{ post.createdAt | date | uppercase}} </td>
+                        <td> {{ post.createdAt| date | uppercase}} </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    
 </div>

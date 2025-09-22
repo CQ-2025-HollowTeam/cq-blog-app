@@ -1,27 +1,25 @@
 <section class="flex flex-col gap-4">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-start">
         <div class="flex items-center gap-2">
-            <div class="text-2xl">{{ comments().length }}</div>
+            <div class="text-2xl">{{ commentResource.value()?.data?.length }}</div>
             <h3 class="text-2xl">Comments</h3>
-        </div>
-        <div class="flex gap-2">
-            <button class="btn btn-primary">Más recientes</button>
-            <button class="btn btn-neutral">Populares</button>
         </div>
     </div>
 
     <div class="w-full flex flex-col gap-5">
 
         <div class="w-full flex flex-col gap-4">
-            <comment-input-form></comment-input-form>
+            <comment-input-form [postId]="postId()" (newComment)="commentResource.value()?.data?.unshift($event)"></comment-input-form>
         </div>
 
         <div class="w-full border card-border"></div>
 
         <!--OTHER COMMENTS-->
         <div class="flex flex-col gap-4">
-            @for (comment of comments(); track comment.id) {
-                <post-comment [comment]="comment"></post-comment>
+            @if(commentResource.hasValue()) {
+                @for (comment of commentResource.value().data; track comment) {
+                    <post-comment [comment]="comment"></post-comment>
+                }
             }
         </div>
         
