@@ -3,7 +3,6 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EditorComponent } from '@tinymce/tinymce-angular';
 import { environment } from '../../../../../environments/environment';
 import { Post } from '../../../../posts/interfaces/post.interface';
-import { PostCategoryComponent } from '../../../../categories/components/post-category/post-category.component';
 import { PostService } from '../../../../posts/services/post.service';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
@@ -103,6 +102,7 @@ export class PostFormComponent implements OnInit {
         categories: formValue.categories?.map(category => category.id),
       };
       await firstValueFrom(this.postService.createPost(postLike));
+      this.router.navigateByUrl('/admin/posts');
 
     } else {
       //Actualizar
@@ -113,6 +113,7 @@ export class PostFormComponent implements OnInit {
       };
       console.log('post like', postLike);
       await firstValueFrom(this.postService.updatePost(this.post().id, postLike));
+      this.router.navigateByUrl('/admin/posts');
     }
   }
 

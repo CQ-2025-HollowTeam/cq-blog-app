@@ -1,5 +1,13 @@
 @if (user()){
 <div class="flex gap-2">
+
+    @if(isAdmin()) {
+        <button class="btn btn-ghost" routerLink="/admin">
+            <span class="pi pi-chart-line mt-1"></span>
+            Panel administrador
+        </button>
+    }   
+    
     <a class="btn" routerLink="/profile">
         <span class="pi pi-user mt-1"></span>
         {{ user()?.username }}
