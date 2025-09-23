@@ -1,0 +1,122 @@
+<div class="w-full flex flex-col gap-2">
+    <div class="flex flex-row justify-between items-center">
+        <p>
+            <span class="font-bold text-lg">Información personal</span>
+            <br />
+            <span>
+                Actualiza tu información de perfil y correo electrónico.
+            </span>
+        </p>
+        @if (!readonly() && !editable()) {
+        <button
+            (click)="editable.set(!editable())"
+            class="btn btn-ghost border-1 border-base-content"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                    d="M6.169 6.331a3 3 0 0 0-.833 1.6l-.338 1.912a1 1 0 0 0 1.159 1.159l1.912-.338a3 3 0 0 0 1.6-.833l3.07-3.07l2-2A.9.9 0 0 0 15 4.13A3.13 3.13 0 0 0 11.87 1a.9.9 0 0 0-.632.262l-2 2zm3.936-1.814L7.229 7.392a1.5 1.5 0 0 0-.416.8L6.6 9.4l1.208-.213l.057-.01a1.5 1.5 0 0 0 .743-.406l2.875-2.876a1.63 1.63 0 0 0-1.378-1.378m2.558.199a3.14 3.14 0 0 0-1.379-1.38l.82-.82a1.63 1.63 0 0 1 1.38 1.38zM8 2.25a.75.75 0 0 0-.75-.75H4.5a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h7a3 3 0 0 0 3-3V8.75a.75.75 0 0 0-1.5 0v2.75a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 11.5v-7A1.5 1.5 0 0 1 4.5 3h2.75A.75.75 0 0 0 8 2.25"
+                    clip-rule="evenodd"
+                />
+            </svg>
+            Editar
+        </button>
+        }
+    </div>
+    <hr />
+    <form
+        class="flex flex-col items-center gap-2"
+        [formGroup]="form"
+        (ngSubmit)="updateUser()"
+    >
+        <div class="w-full">
+            <legend class="fieldset-legend">Nombre completo</legend>
+            <label class="input w-full">
+                <input type="text" autocomplete="name" formControlName="name" />
+            </label>
+            <ng-container
+                *ngTemplateOutlet="formError; context: { field: 'name' }"
+            />
+        </div>
+        <div class="w-full">
+            <legend class="fieldset-legend">Nombre de usuario</legend>
+            <label class="input w-full">
+                <input
+                    type="text"
+                    autocomplete="username"
+                    formControlName="username"
+                />
+            </label>
+            <ng-container
+                *ngTemplateOutlet="formError; context: { field: 'username' }"
+            />
+        </div>
+        <div class="w-full">
+            <legend class="fieldset-legend">Correo electrónico</legend>
+            <label class="input w-full">
+                <input
+                    type="text"
+                    autocomplete="email"
+                    formControlName="email"
+                />
+            </label>
+            <ng-container
+                *ngTemplateOutlet="formError; context: { field: 'email' }"
+            />
+        </div>
+
+        @if (editable()){
+        <div class="flex flex-row self-end justify-end gap-4 mt-4">
+            <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="resetForm()"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        d="M8 12.243L6.232 14.01a1.5 1.5 0 0 1-2.121 0L1.99 11.89a1.5 1.5 0 0 1 0-2.122L3.757 8L1.99 6.232a1.5 1.5 0 0 1 0-2.121L4.11 1.99a1.5 1.5 0 0 1 2.122 0L8 3.757L9.768 1.99a1.5 1.5 0 0 1 2.121 0l2.122 2.12a1.5 1.5 0 0 1 0 2.122L12.243 8l1.767 1.768a1.5 1.5 0 0 1 0 2.121l-2.12 2.121a1.5 1.5 0 0 1-2.122 0z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+                Cancelar
+            </button>
+            <button type="submit" class="btn btn-primary">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        d="M13.488 3.43a.75.75 0 0 1 .081 1.058l-6 7a.75.75 0 0 1-1.1.042l-3.5-3.5A.75.75 0 0 1 4.03 6.97l2.928 2.927l5.473-6.385a.75.75 0 0 1 1.057-.081"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+                Guardar cambios
+            </button>
+        </div>
+        }
+    </form>
+</div>
+
+<ng-template #formError let-field="field">
+    @if (formUtils.isValidField(form, field)){
+    <small class="form-text text-error">
+        {{ formUtils.getFieldError(form, field) }}
+    </small>
+    }
+</ng-template>

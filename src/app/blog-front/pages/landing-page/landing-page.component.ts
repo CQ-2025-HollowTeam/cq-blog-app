@@ -11,15 +11,15 @@ import { tap } from 'rxjs';
 @Component({
   selector: 'app-landing-page',
   imports: [
-    PostCardComponent, 
-    PostSearchFormComponent, 
+    PostCardComponent,
+    PostSearchFormComponent,
     PostsCarouselComponent
   ],
   templateUrl: './landing-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingPageComponent {
-  
+
   postService = inject(PostService);
   postSearchService = inject(PostSearchService);
 
@@ -28,10 +28,10 @@ export class LandingPageComponent {
   showMoreButton = signal<boolean>(true);
 
   landingPosts = signal<Post[]>([]);
-  
+
   resetPostsEffect = effect(() => {
       this.postSearchService.search();
-      this.currentPage.set(1); 
+      this.currentPage.set(1);
       this.landingPosts.set([]);
       this.showMoreButton.set(true);
   });

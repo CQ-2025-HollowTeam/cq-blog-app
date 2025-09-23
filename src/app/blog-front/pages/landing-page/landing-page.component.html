@@ -1,37 +1,41 @@
 <main #postsGroup class="h-full overflow-auto flex flex-col gap-8 py-8 px-4">
-    
     <!--TRENDING POSTS-->
     <div class="grid grid-cols-1">
-        <div class="flex flex-col gap-8">   
+        <div class="flex flex-col gap-8">
             <h2 class="text-2xl">Trending posts</h2>
             @if(trendingPostsResource.hasValue()) {
-                <posts-carousel
-                    [posts]="trendingPostsResource.value() || []" 
-                    [layoutType]="cardLayout.BIG"
-                    [spaceBetween]="16"
-                ></posts-carousel>
+            <posts-carousel
+                [posts]="trendingPostsResource.value() || []"
+                [layoutType]="cardLayout.BIG"
+                [spaceBetween]="16"
+            ></posts-carousel>
             }
         </div>
     </div>
 
     <!--FILTERS-->
-    <post-search-form 
+    <post-search-form
         [currentSearchValue]="postSearchService.search()"
         [currentAuthorValue]="postSearchService.author()"
         [currentCategoryValue]="postSearchService.category()"
     ></post-search-form>
 
     <!--POSTS GRID-->
-    <div class=" h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @for (post of landingPosts() || []; track post.id) {
-            <post-card [post]="post"  [layoutType]="cardLayout.SMALL"></post-card>
+        <post-card [post]="post" [layoutType]="cardLayout.SMALL"></post-card>
         }
     </div>
 
     @if(landingPosts().length) {
-        <div class="w-full flex justify-center">
-            <button (click)="addPage()" [class.hidden]="!showMoreButton()" class="btn btn-primary">Mostrar más</button>
-        </div>
+    <div class="w-full flex justify-center">
+        <button
+            (click)="addPage()"
+            [class.hidden]="!showMoreButton()"
+            class="btn btn-primary"
+        >
+            Mostrar más
+        </button>
+    </div>
     }
-    
 </main>

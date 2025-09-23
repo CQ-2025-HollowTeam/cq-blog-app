@@ -1,4 +1,4 @@
-import { User } from "../../authors/interfaces/user.interface";
+import { User } from '@shared/interfaces/user.interface';
 
 export interface CommentResponse {
     data: Comment[];
@@ -6,17 +6,17 @@ export interface CommentResponse {
 }
 
 export interface Comment {
-    id:        number;
-    content:   string;
-    parentId:  number;
-    authorId:  string;
-    postId:    number;
+    id: number;
+    content: string;
+    parentId: number;
+    authorId: string;
+    postId: number;
     createdAt: Date;
     updatedAt: Date;
-    author:    User;
+    author: User;
     reactions?: Reaction[];
-    replies?:   any[];
-    _count?:    Count;
+    replies?: any[];
+    _count?: Count;
 }
 
 export interface NewComment {
@@ -26,26 +26,26 @@ export interface NewComment {
 }
 
 export interface NewReaction {
-    userId: string,
-    reactionId: number,
+    userId: string;
+    reactionId: number;
 }
 
 export interface Count {
     reactions: number;
-    replies:   number;
+    replies: number;
 }
 
 export interface Reaction {
-    id:         number;
-    userId:     string;
-    commentId:  number;
+    id: number;
+    userId: string;
+    commentId: number;
     reactionId: number;
-    createdAt:  Date;
-    updatedAt:  Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface Meta {
-    total:    number;
-    page:     number;
+    total: number;
+    page: number;
     lastPage: number;
 }
