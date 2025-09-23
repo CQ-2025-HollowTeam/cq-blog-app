@@ -13,9 +13,11 @@
       </h2>
       <div class="card-actions justify-between items-center">
           <p class="text-gray-400">{{ post().createdAt | date | uppercase }}</p>
-          @for (category of post().categories; track $index) {
-            <post-category [category]="category"></post-category>
-          }
+          <div class="flex gap-2"> 
+            @for (category of post().categories; track $index) {
+              <post-category [category]="category"></post-category>
+            }
+          </div>      
       </div>
     </div>
   </div>

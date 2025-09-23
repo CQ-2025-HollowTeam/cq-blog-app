@@ -30,6 +30,7 @@ enum Tabs {
         ToggleGroupComponent,
     ],
     templateUrl: './profile-page.component.html',
+    styleUrl: './profile-page.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePageComponent {

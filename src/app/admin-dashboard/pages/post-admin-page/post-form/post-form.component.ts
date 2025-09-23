@@ -13,8 +13,9 @@ import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'post-form',
-  imports: [ReactiveFormsModule, EditorComponent, PostCategoryComponent],
+  imports: [ReactiveFormsModule, EditorComponent],
   templateUrl: './post-form.component.html',
+  styleUrl: './post-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostFormComponent implements OnInit {
@@ -61,11 +62,31 @@ export class PostFormComponent implements OnInit {
   setFormValue(postLike: Partial<Post>){
     this.postForm.reset(postLike as any); 
     this.postForm.patchValue({categories: postLike.categories ?? []});
+    console.log(this.postForm.value);
   }
 
   addCategory(categoryId: number) {
-    //const exists = this.postForm.value.categories?.some(c => c.name === category);
-    //if(exists) return;
+
+    const exists = this.postForm.value.categories?.some(category => category.id === categoryId);
+    if(exists) return;
+
+    const newCategory: Category = {
+      id: categoryId,
+      name: this.categoriesResource.value()?.find(cat => cat.id === categoryId)?.name || 'New Category',
+      slug: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+
+    this.postForm.patchValue({
+      categories: [...(this.postForm.value.categories || []), newCategory]
+    });
+  }
+
+  removeCategory(categoryId: number) {
+    this.postForm.patchValue({
+      categories: this.postForm.value.categories?.filter(category => category.id !== categoryId) || []
+    });
   }
 
   async onSubmit() {
@@ -75,20 +96,22 @@ export class PostFormComponent implements OnInit {
     
     if(this.post().id == 0) {
       //Nuevo
-      const postLike: Partial<Post> = {
+      const postLike: Partial<any> = {
         title: formValue.title!,
         slug: formValue.slug!,
         content: formValue.content!,
-        authorId: '7d824024-9169-4811-9569-cdb16d1a60ea' //TODO: Cambiar cuando haya auth
+        categories: formValue.categories?.map(category => category.id),
       };
       await firstValueFrom(this.postService.createPost(postLike));
 
     } else {
       //Actualizar
-      const postLike: Partial<Post> = {
+      const postLike: Partial<any> = {
         title: formValue.title!,  
         content: formValue.content!,
+        categories: formValue.categories?.map(category => category.id),
       };
+      console.log('post like', postLike);
       await firstValueFrom(this.postService.updatePost(this.post().id, postLike));
     }
   }

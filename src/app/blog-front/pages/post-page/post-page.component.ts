@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map, switchMap, tap } from 'rxjs';
 import { PostsCarouselComponent } from '../../../posts/components/posts-carousel/posts-carousel.component';
 import { PostCategoryComponent } from '../../../categories/components/post-category/post-category.component';
@@ -15,13 +15,14 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-post-page',
   imports: [
-    PostsCarouselComponent, 
-    PostCategoryComponent, 
-    PostCommentsComponent, 
-    DatePipe, 
+    PostsCarouselComponent,
+    PostCategoryComponent,
+    PostCommentsComponent,
+    DatePipe,
     UpperCasePipe,
-    PostImagePipe
-  ],
+    PostImagePipe,
+    RouterLink
+],
   templateUrl: './post-page.component.html',
   styleUrl: './post-page.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

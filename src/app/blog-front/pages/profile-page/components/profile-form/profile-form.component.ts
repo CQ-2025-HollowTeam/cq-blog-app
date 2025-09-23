@@ -18,6 +18,7 @@ import { FormUtils } from '@shared/utils/form-utils';
     selector: 'profile-form',
     imports: [CommonModule, ReactiveFormsModule],
     templateUrl: './profile-form.component.html',
+    styleUrl: './profile-form.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFormComponent implements OnInit {
