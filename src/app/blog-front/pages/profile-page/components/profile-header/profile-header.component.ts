@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
     selector: 'profile-header',
     imports: [ProfileImageComponent, DatePipe],
     templateUrl: './profile-header.component.html',
+    styleUrl: './profile-header.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileHeaderComponent {

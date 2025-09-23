@@ -33,7 +33,7 @@
                     <span class="pi pi-user text-gray-400 pt-1"></span>
                     <p class="text-gray-400">Autor</p>
                 </div>
-                <div class="p-4 card-border rounded-2xl flex gap-2 items-center hover:cursor-pointer hover:bg-base-100">
+                <div [routerLink]="['/profile', postResource.value()?.post?.authorId]" class="p-4 card-border rounded-2xl flex gap-2 items-center hover:cursor-pointer hover:bg-base-100">
                     <div class="avatar">
                         <div class="w-12 h-12 rounded-full">
                             <img src="https://img.daisyui.com/images/profile/demo/yellingcat@192.webp" />

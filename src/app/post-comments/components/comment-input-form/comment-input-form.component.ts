@@ -30,7 +30,6 @@ export class CommentInputFormComponent {
     if(this.commentForm.invalid) return;
 
     const newCommentLike: NewComment = {
-      authorId: '3c8df840-08f3-4eeb-a5b6-855fa91b0402', //TODO: Reemplazar por el ID de usuario autenticado
       content: this.commentForm.value.content,
       parentId: 0,
     }
