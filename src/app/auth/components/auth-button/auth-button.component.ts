@@ -14,6 +14,7 @@ import { UserService } from '@shared/services/user.service';
 import { ImagePipe } from '@shared/pipes/image.pipe';
 import { AuthService } from '@auth/services/auth.service';
 import { TitleCasePipe } from '@angular/common';
+import { Role } from '@auth/guards/is-admin.guard';
 
 @Component({
     selector: 'auth-button',
@@ -32,6 +33,13 @@ export class AuthButtonComponent {
     userService = inject(UserService);
 
     user = computed(this.userService.user);
+
+    isAdmin = computed(() => {
+        if (this.user()?.role !== Role.ADMIN) {
+        return false;
+      }
+      return true;
+    });
 
     loginDialog = signal(false);
     registerDialog = signal(false);

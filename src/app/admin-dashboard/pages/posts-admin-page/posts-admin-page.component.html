@@ -8,7 +8,7 @@
                 [currentCategoryValue]="postSearchService.category()"
                 [currentAuthorValue]="postSearchService.author()"
             ></post-search-form>
-            <button routerLink="/admin/post/new" class="btn btn-neutral">Nuevo Post</button>
+            <button routerLink="/admin/post/new" class="btn btn-neutral"><span class="pi pi-sparkles mt-0.5"></span>Nuevo Post</button>
         </div>
 
         <posts-table [posts]="postsResource.value()?.data ?? []"></posts-table>

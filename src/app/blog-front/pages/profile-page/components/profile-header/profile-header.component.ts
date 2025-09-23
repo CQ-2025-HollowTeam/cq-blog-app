@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { User } from '@shared/interfaces/user.interface';
 import { ProfileImageComponent } from '../profile-image/profile-image.component';
 import { DatePipe } from '@angular/common';
+import { UserService } from '@shared/services/user.service';
 
 @Component({
     selector: 'profile-header',
@@ -13,4 +14,6 @@ import { DatePipe } from '@angular/common';
 export class ProfileHeaderComponent {
     user = input.required<User>();
     readonly = input<boolean>(false);
+
+    userService = inject(UserService);
 }

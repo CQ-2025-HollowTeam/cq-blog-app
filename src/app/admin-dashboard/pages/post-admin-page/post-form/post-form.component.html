@@ -67,7 +67,13 @@
         <button (click)="removePost()" class="btn btn-link text-error p-0"><span class="pi pi-trash text-error"></span>Eliminar post</button>
         <div class="flex gap-2">
             <button (click)="discardChanges($event)" class="btn btn-ghost">Descartar</button>
-            <button (click)="onSubmit()" class="btn btn-primary">Publicar</button>
+            <button (click)="onSubmit()" class="btn btn-primary">
+                @if(post().id == 0) {
+                    Publicar
+                }@else {
+                    Actualizar
+                }
+            </button>
         </div>
     </div>
 

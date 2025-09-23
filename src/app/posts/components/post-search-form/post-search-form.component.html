@@ -8,7 +8,7 @@
     </label>
 
     @if(authorsResource.hasValue()) {
-        <select #authorSelector [value]="authorValue()" (change)="authorChanges(authorSelector.value)" class="select w-full sm:w-64 bg-base-200 hover:cursor-pointer">
+        <select #authorSelector [value]="authorValue()" (change)="authorChanges(authorSelector.value)" class="select w-full sm:w-72 bg-base-200 hover:cursor-pointer">
             <option [value]="''">Todos los autores</option>
             @for (author of authorsResource.value(); track author.id) {
                 <option [value]="author.name">{{ author.name }}</option>
@@ -17,7 +17,7 @@
     }
     
     @if(categoriesResource.hasValue()) {
-        <select #categorySelector [value]="caegoryValue()" (change)="categoryChanges(categorySelector.value)" class="select w-full sm:w-64 bg-base-200 hover:cursor-pointer">
+        <select #categorySelector [value]="caegoryValue()" (change)="categoryChanges(categorySelector.value)" class="select w-full sm:w-72 bg-base-200 hover:cursor-pointer">
             <option [value]="''">Todas las categorías</option>
             @for (category of categoriesResource.value(); track $index) {
                 <option [value]="category.slug" >{{ category.name }}</option>

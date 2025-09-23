@@ -25,7 +25,7 @@ export class PostsAdminPageComponent {
   paginationService = inject(PaginationService);
   postSearchService = inject(PostSearchService);
 
-  postsPerPage = signal<number>(3);
+  postsPerPage = signal<number>(5);
 
   postsResource = rxResource({
     params: () => ({

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommentService } from '../../services/comment.service';
 import { Comment, NewComment } from '../../interfaces/comment.interface';
 import { firstValueFrom } from 'rxjs';
+import { UserService } from '@shared/services/user.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'comment-input-form',
@@ -16,9 +18,9 @@ export class CommentInputFormComponent {
   postId = input.required<number>();
   newComment = output<Comment>();
 
-
   fb = inject(FormBuilder);
   commentService = inject(CommentService);
+  userService = inject(UserService);
 
   commentForm: FormGroup = this.fb.group({
     content: ['', Validators.required],
