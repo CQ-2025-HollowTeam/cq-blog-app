@@ -1,4 +1,7 @@
-<form class="flex flex-col sm:flex-row  justify-center items-center gap-6">
+<form
+    class="flex flex-col sm:flex-row justify-center items-center gap-6"
+    (keydown.enter)="$event.preventDefault()"
+>
     <label class="w-full input bg-base-200">
         <span class="pi pi-search"></span>
         <input #inputSearch [value]="inputSearchValue()" (keyup)="inputSearchValue.set(inputSearch.value)" type="search" placeholder="Busca un post..." />
