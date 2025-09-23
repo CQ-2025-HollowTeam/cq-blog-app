@@ -12,6 +12,8 @@ export class FormUtils {
             switch (key) {
                 case 'required':
                     return 'Campo obligatorio';
+                case 'pattern':
+                    return 'Debe incluir mayúscula, minúscula y un número o símbolo (no iniciar con .)';
                 case 'usernameTaken':
                     return 'Nombre de usuario no disponible';
                 case 'emailTaken':
